@@ -3,7 +3,7 @@ import ReactDOM from "react-dom";
 import App from "./App";
 import * as serviceWorkerRegistration from "./serviceWorkerRegistration";
 import reportWebVitals from "./reportWebVitals";
-import client from "./apollo/apolloClient";
+import client from "./apollo/index";
 import { ApolloProvider } from "@apollo/client";
 
 ReactDOM.render(
