@@ -14,12 +14,12 @@ const GET_TEST_QUERY_RESULT = gql`
 function DisplayTestResult() {
   const { loading, error, data } = useQuery(GET_TEST_QUERY_RESULT);
 
-  console.log(data);
   if (loading) return <p>Loading...</p>;
   if (error) return <p>Error :(</p>;
 
   return (
     <div>
+      <h1>Query result: </h1>
       <h3>{data.products?.count}</h3>
     </div>
   );
