@@ -9,8 +9,8 @@ import {
   IonText,
 } from "@ionic/react";
 
-const GET_TEST_QUERY_RESULT = gql`
-  query GetTestResult {
+const GET_PRODUCTS_RESULT = gql`
+  query GetProducts {
     productProjectionSearch(
       locale: "en"
       text: ""
@@ -93,7 +93,7 @@ const GET_TEST_QUERY_RESULT = gql`
 `;
 
 function DisplayProductList() {
-  const { loading, error, data } = useQuery(GET_TEST_QUERY_RESULT);
+  const { loading, error, data } = useQuery(GET_PRODUCTS_RESULT);
 
   if (loading) return <p>Loading...</p>;
   if (error) return <p>Error :(</p>;
