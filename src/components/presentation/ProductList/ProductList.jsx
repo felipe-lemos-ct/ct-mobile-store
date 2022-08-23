@@ -1,4 +1,12 @@
 import { useQuery, gql } from "@apollo/client";
+import {
+  IonSlides,
+  IonSlide,
+  IonContent,
+  IonCard,
+  IonCardHeader,
+  IonCardTitle,
+} from "@ionic/react";
 
 const GET_TEST_QUERY_RESULT = gql`
   query GetTestResult {
@@ -88,15 +96,86 @@ function DisplayProductList() {
 
   if (loading) return <p>Loading...</p>;
   if (error) return <p>Error :(</p>;
+  const index = 3;
   const imgsrc =
-    data.productProjectionSearch?.results[0].masterVariant.images[0].url;
-  const alt = data.productProjectionSearch?.results[0].name;
+    data.productProjectionSearch?.results[index].masterVariant.images[0].url;
+  const alt = data.productProjectionSearch?.results[index].name;
+
+  const slideOpts = {
+    initialSlide: 1,
+    speed: 400,
+  };
+
   return (
+    <IonContent fullscreen class="ion-padding" scroll-y="false">
+      <IonSlides pager={true} options={slideOpts}>
+        <IonSlide>
+          <div class="slide">
+            <IonCard>
+              <img
+                src={
+                  data.productProjectionSearch?.results[0].masterVariant
+                    .images[0].url
+                }
+                alt="aa"
+              ></img>
+              <IonCardHeader>
+                <IonCardTitle>
+                  {data.productProjectionSearch?.results[0].name}
+                </IonCardTitle>
+              </IonCardHeader>
+            </IonCard>
+          </div>
+        </IonSlide>
+        <IonSlide>
+          <div class="slide">
+            <IonCard>
+              <img
+                src={
+                  data.productProjectionSearch?.results[1].masterVariant
+                    .images[0].url
+                }
+                alt="aa"
+              ></img>
+              <IonCardHeader>
+                <IonCardTitle>
+                  {data.productProjectionSearch?.results[1].name}
+                </IonCardTitle>
+              </IonCardHeader>
+            </IonCard>
+          </div>
+        </IonSlide>
+        <IonSlide>
+          <div class="slide">
+            <IonCard>
+              <img
+                src={
+                  data.productProjectionSearch?.results[2].masterVariant
+                    .images[0].url
+                }
+                alt="aa"
+              ></img>
+              <IonCardHeader>
+                <IonCardTitle>
+                  {data.productProjectionSearch?.results[2].name}
+                </IonCardTitle>
+              </IonCardHeader>
+            </IonCard>
+          </div>
+        </IonSlide>
+      </IonSlides>
+    </IonContent>
+  );
+}
+
+/**
+ * 
+
     <div>
       <h1>First product:</h1>
       <img src={imgsrc} alt={alt}></img>
+      <h3>{alt}</h3>
     </div>
-  );
-}
+ */
 
 export default DisplayProductList;
