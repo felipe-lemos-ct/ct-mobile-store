@@ -7,6 +7,7 @@ import {
   IonCardHeader,
   IonCardTitle,
   IonText,
+  IonCardContent,
 } from "@ionic/react";
 
 const GET_PRODUCTS_RESULT = gql`
@@ -101,7 +102,13 @@ function DisplayProductList() {
     initialSlide: 0,
     speed: 400,
     loop: true,
+    innerHeight: 100,
   };
+
+  function insertDecimal(num) {
+    return (num / 100).toFixed(2);
+  }
+
   return (
     <IonContent fullscreen className="ion-padding" scroll-y="false">
       <IonText>
@@ -123,6 +130,12 @@ function DisplayProductList() {
                   {data.productProjectionSearch?.results[0].name}
                 </IonCardTitle>
               </IonCardHeader>
+              <IonCardContent>
+                {insertDecimal(
+                  data.productProjectionSearch?.results[0].masterVariant
+                    .scopedPrice.value.centAmount
+                )}
+              </IonCardContent>
             </IonCard>
           </div>
         </IonSlide>
@@ -141,6 +154,12 @@ function DisplayProductList() {
                   {data.productProjectionSearch?.results[1].name}
                 </IonCardTitle>
               </IonCardHeader>
+              <IonCardContent>
+                {insertDecimal(
+                  data.productProjectionSearch?.results[1].masterVariant
+                    .scopedPrice.value.centAmount
+                )}
+              </IonCardContent>
             </IonCard>
           </div>
         </IonSlide>
@@ -159,6 +178,12 @@ function DisplayProductList() {
                   {data.productProjectionSearch?.results[2].name}
                 </IonCardTitle>
               </IonCardHeader>
+              <IonCardContent>
+                {insertDecimal(
+                  data.productProjectionSearch?.results[2].masterVariant
+                    .scopedPrice.value.centAmount
+                )}
+              </IonCardContent>
             </IonCard>
           </div>
         </IonSlide>
