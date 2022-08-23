@@ -1,14 +1,12 @@
 import { IonApp, IonContent } from "@ionic/react";
-import Header from "../components/presentation/Header/Header";
-import DisplayTestResult from "../components/presentation/TestComponent/TestComponent";
+import DisplayProductList from "../components/presentation/ProductList/ProductList";
 
 const Home = () => {
   return (
     <IonApp>
       <IonContent>
-        <DisplayTestResult />
+        <DisplayProductList />
       </IonContent>
-      <Header />
     </IonApp>
   );
 };
