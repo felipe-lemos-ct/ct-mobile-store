@@ -6,6 +6,7 @@ import {
   IonCard,
   IonCardHeader,
   IonCardTitle,
+  IonText,
 } from "@ionic/react";
 
 const GET_TEST_QUERY_RESULT = gql`
@@ -96,21 +97,19 @@ function DisplayProductList() {
 
   if (loading) return <p>Loading...</p>;
   if (error) return <p>Error :(</p>;
-  const index = 3;
-  const imgsrc =
-    data.productProjectionSearch?.results[index].masterVariant.images[0].url;
-  const alt = data.productProjectionSearch?.results[index].name;
-
   const slideOpts = {
-    initialSlide: 1,
+    initialSlide: 0,
     speed: 400,
+    loop: true,
   };
-
   return (
-    <IonContent fullscreen class="ion-padding" scroll-y="false">
+    <IonContent fullscreen className="ion-padding" scroll-y="false">
+      <IonText>
+        <h1>Some products:</h1>
+      </IonText>
       <IonSlides pager={true} options={slideOpts}>
         <IonSlide>
-          <div class="slide">
+          <div className="slide">
             <IonCard>
               <img
                 src={
@@ -128,7 +127,7 @@ function DisplayProductList() {
           </div>
         </IonSlide>
         <IonSlide>
-          <div class="slide">
+          <div className="slide">
             <IonCard>
               <img
                 src={
@@ -146,7 +145,7 @@ function DisplayProductList() {
           </div>
         </IonSlide>
         <IonSlide>
-          <div class="slide">
+          <div className="slide">
             <IonCard>
               <img
                 src={
@@ -167,15 +166,4 @@ function DisplayProductList() {
     </IonContent>
   );
 }
-
-/**
- * 
-
-    <div>
-      <h1>First product:</h1>
-      <img src={imgsrc} alt={alt}></img>
-      <h3>{alt}</h3>
-    </div>
- */
-
 export default DisplayProductList;
