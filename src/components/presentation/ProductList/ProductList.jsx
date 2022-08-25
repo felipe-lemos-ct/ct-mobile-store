@@ -10,6 +10,7 @@ import {
   IonCardContent,
 } from "@ionic/react";
 
+//"b658cd32-a4b3-4f65-89b9-0bd1794917db"
 const GET_PRODUCTS_RESULT = gql`
   query GetProducts {
     productProjectionSearch(
@@ -95,6 +96,7 @@ const GET_PRODUCTS_RESULT = gql`
 
 function DisplayProductList() {
   const { loading, error, data } = useQuery(GET_PRODUCTS_RESULT);
+  const catId = "b658cd32-a4b3-4f65-89b9-0bd1794917db";
 
   if (loading) return <p>Loading...</p>;
   if (error) return <p>Error :(</p>;
