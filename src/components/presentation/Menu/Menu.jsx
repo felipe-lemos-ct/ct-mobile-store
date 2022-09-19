@@ -11,71 +11,40 @@ import {
 } from "@ionic/react";
 
 import { useLocation } from "react-router-dom";
-import {
-  archiveOutline,
-  archiveSharp,
-  bookmarkOutline,
-  heartOutline,
-  heartSharp,
-  mailOutline,
-  mailSharp,
-  paperPlaneOutline,
-  paperPlaneSharp,
-  trashOutline,
-  trashSharp,
-  warningOutline,
-  warningSharp,
-} from "ionicons/icons";
+import { manOutline, womanOutline, manSharp, womanSharp } from "ionicons/icons";
+import { addIcons } from "ionicons";
 import "./Menu.css";
+
+addIcons({
+  searchProducts: "public/assets/icon/search-product-icon.svg",
+});
 
 const appPages = [
   {
-    title: "Inbox",
-    url: "/page/Inbox",
-    iosIcon: mailOutline,
-    mdIcon: mailSharp,
+    title: "New",
+    url: "/page/Products",
   },
   {
-    title: "Outbox",
-    url: "/page/Outbox",
-    iosIcon: paperPlaneOutline,
-    mdIcon: paperPlaneSharp,
+    title: "Products",
+    url: "/page/Products",
+    iosIcon: manOutline,
+    mdIcon: manSharp,
   },
   {
-    title: "Favorites",
-    url: "/page/Favorites",
-    iosIcon: heartOutline,
-    mdIcon: heartSharp,
-  },
-  {
-    title: "Archived",
-    url: "/page/Archived",
-    iosIcon: archiveOutline,
-    mdIcon: archiveSharp,
-  },
-  {
-    title: "Trash",
-    url: "/page/Trash",
-    iosIcon: trashOutline,
-    mdIcon: trashSharp,
-  },
-  {
-    title: "Spam",
-    url: "/page/Spam",
-    iosIcon: warningOutline,
-    mdIcon: warningSharp,
+    title: "Women",
+    url: "/page/Women",
+    iosIcon: womanOutline,
+    mdIcon: womanSharp,
   },
 ];
-
-const labels = ["Family", "Friends", "Notes", "Work", "Travel", "Reminders"];
 
 const Menu = () => {
   const location = useLocation();
   return (
     <IonMenu contentId="main" type="overlay">
       <IonContent>
-        <IonList id="inbox-list">
-          <IonListHeader>Inbox</IonListHeader>
+        <IonList id="store-menu">
+          <IonListHeader>Menu</IonListHeader>
           <IonNote>hi@ionicframework.com</IonNote>
           {appPages.map((appPage, index) => {
             return (
@@ -99,16 +68,6 @@ const Menu = () => {
               </IonMenuToggle>
             );
           })}
-        </IonList>
-
-        <IonList id="labels-list">
-          <IonListHeader>Labels</IonListHeader>
-          {labels.map((label, index) => (
-            <IonItem lines="none" key={index}>
-              <IonIcon slot="start" icon={bookmarkOutline} />
-              <IonLabel>{label}</IonLabel>
-            </IonItem>
-          ))}
         </IonList>
       </IonContent>
     </IonMenu>

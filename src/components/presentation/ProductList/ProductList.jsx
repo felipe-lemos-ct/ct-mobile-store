@@ -12,7 +12,7 @@ import {
 
 //"b658cd32-a4b3-4f65-89b9-0bd1794917db"
 const GET_PRODUCTS_RESULT = gql`
-  query GetProducts {
+  query GetProducts($catId: String!) {
     productProjectionSearch(
       locale: "en"
       text: ""
@@ -39,7 +39,7 @@ const GET_PRODUCTS_RESULT = gql`
             tree: {
               path: "categories.id"
               rootValues: []
-              subTreeValues: ["b658cd32-a4b3-4f65-89b9-0bd1794917db"]
+              subTreeValues: [$catId]
             }
           }
         }
@@ -95,8 +95,14 @@ const GET_PRODUCTS_RESULT = gql`
 `;
 
 function DisplayProductList() {
-  const { loading, error, data } = useQuery(GET_PRODUCTS_RESULT);
-  const catId = "b658cd32-a4b3-4f65-89b9-0bd1794917db";
+  //const catId = "b658cd32-a4b3-4f65-89b9-0bd1794917db";
+  const catId = "d3f8c9f8-1800-48f8-9650-1cd03abd2998";
+
+  const { loading, error, data } = useQuery(GET_PRODUCTS_RESULT, {
+    variables: {
+      catId,
+    },
+  });
 
   if (loading) return <p>Loading...</p>;
   if (error) return <p>Error :(</p>;
@@ -112,7 +118,7 @@ function DisplayProductList() {
   }
 
   return (
-    <IonContent fullscreen className="ion-padding" scroll-y="false">
+    <IonContent className="ion-padding" scroll-y="false">
       <IonText>
         <h1>Some products:</h1>
       </IonText>
