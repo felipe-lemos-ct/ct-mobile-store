@@ -15,6 +15,20 @@ import "./Page.css";
 const Page = () => {
   const { name, id } = useParams();
 
+  if (name === "Main")
+    return (
+      <IonPage>
+        <IonHeader>
+          <IonToolbar>
+            <IonButtons slot="start">
+              <IonMenuButton />
+            </IonButtons>
+            <IonTitle>{name}</IonTitle>
+          </IonToolbar>
+        </IonHeader>
+      </IonPage>
+    );
+
   return (
     <IonPage>
       <IonHeader>

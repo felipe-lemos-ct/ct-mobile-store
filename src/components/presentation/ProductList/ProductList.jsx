@@ -95,6 +95,7 @@ const GET_PRODUCTS_RESULT = gql`
 `;
 
 function DisplayProductList({ id }) {
+  console.log(id);
   const catId = id;
 
   const { loading, error, data } = useQuery(GET_PRODUCTS_RESULT, {
@@ -115,84 +116,86 @@ function DisplayProductList({ id }) {
   function insertDecimal(num) {
     return (num / 100).toFixed(2);
   }
-
-  return (
-    <IonContent className="ion-padding" scroll-y="false">
-      <IonSlides pager={true} options={slideOpts}>
-        <IonSlide>
-          <div className="slide">
-            <IonCard>
-              <img
-                src={
-                  data.productProjectionSearch?.results[0].masterVariant
-                    .images[0].url
-                }
-                alt="aa"
-              ></img>
-              <IonCardHeader>
-                <IonCardTitle>
-                  {data.productProjectionSearch?.results[0].name}
-                </IonCardTitle>
-              </IonCardHeader>
-              <IonCardContent>
-                {insertDecimal(
-                  data.productProjectionSearch?.results[0].masterVariant
-                    .scopedPrice.value.centAmount
-                )}
-              </IonCardContent>
-            </IonCard>
-          </div>
-        </IonSlide>
-        <IonSlide>
-          <div className="slide">
-            <IonCard>
-              <img
-                src={
-                  data.productProjectionSearch?.results[1].masterVariant
-                    .images[0].url
-                }
-                alt="aa"
-              ></img>
-              <IonCardHeader>
-                <IonCardTitle>
-                  {data.productProjectionSearch?.results[1].name}
-                </IonCardTitle>
-              </IonCardHeader>
-              <IonCardContent>
-                {insertDecimal(
-                  data.productProjectionSearch?.results[1].masterVariant
-                    .scopedPrice.value.centAmount
-                )}
-              </IonCardContent>
-            </IonCard>
-          </div>
-        </IonSlide>
-        <IonSlide>
-          <div className="slide">
-            <IonCard>
-              <img
-                src={
-                  data.productProjectionSearch?.results[2].masterVariant
-                    .images[0].url
-                }
-                alt="aa"
-              ></img>
-              <IonCardHeader>
-                <IonCardTitle>
-                  {data.productProjectionSearch?.results[2].name}
-                </IonCardTitle>
-              </IonCardHeader>
-              <IonCardContent>
-                {insertDecimal(
-                  data.productProjectionSearch?.results[2].masterVariant
-                    .scopedPrice.value.centAmount
-                )}
-              </IonCardContent>
-            </IonCard>
-          </div>
-        </IonSlide>
-      </IonSlides>
-    </IonContent>
-  );
+  if (!loading && !error) {
+    return (
+      <IonContent className="ion-padding" scroll-y="false">
+        <IonSlides pager={true} options={slideOpts}>
+          <IonSlide>
+            <div className="slide">
+              <IonCard>
+                <img
+                  src={
+                    data.productProjectionSearch?.results[0].masterVariant
+                      .images[0].url
+                  }
+                  alt="aa"
+                ></img>
+                <IonCardHeader>
+                  <IonCardTitle>
+                    {data.productProjectionSearch?.results[0].name}
+                  </IonCardTitle>
+                </IonCardHeader>
+                <IonCardContent>
+                  {insertDecimal(
+                    data.productProjectionSearch?.results[0].masterVariant
+                      .scopedPrice.value.centAmount
+                  )}
+                </IonCardContent>
+              </IonCard>
+            </div>
+          </IonSlide>
+          <IonSlide>
+            <div className="slide">
+              <IonCard>
+                <img
+                  src={
+                    data.productProjectionSearch?.results[1].masterVariant
+                      .images[0].url
+                  }
+                  alt="aa"
+                ></img>
+                <IonCardHeader>
+                  <IonCardTitle>
+                    {data.productProjectionSearch?.results[1].name}
+                  </IonCardTitle>
+                </IonCardHeader>
+                <IonCardContent>
+                  {insertDecimal(
+                    data.productProjectionSearch?.results[1].masterVariant
+                      .scopedPrice.value.centAmount
+                  )}
+                </IonCardContent>
+              </IonCard>
+            </div>
+          </IonSlide>
+          <IonSlide>
+            <div className="slide">
+              <IonCard>
+                <img
+                  src={
+                    data.productProjectionSearch?.results[2].masterVariant
+                      .images[0].url
+                  }
+                  alt="aa"
+                ></img>
+                <IonCardHeader>
+                  <IonCardTitle>
+                    {data.productProjectionSearch?.results[2].name}
+                  </IonCardTitle>
+                </IonCardHeader>
+                <IonCardContent>
+                  {insertDecimal(
+                    data.productProjectionSearch?.results[2].masterVariant
+                      .scopedPrice.value.centAmount
+                  )}
+                </IonCardContent>
+              </IonCard>
+            </div>
+          </IonSlide>
+        </IonSlides>
+      </IonContent>
+    );
+  }
 }
+
 export default DisplayProductList;
