@@ -6,7 +6,6 @@ import {
   IonCard,
   IonCardHeader,
   IonCardTitle,
-  IonText,
   IonCardContent,
 } from "@ionic/react";
 
