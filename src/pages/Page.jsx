@@ -13,7 +13,7 @@ import Home from "./Home";
 import "./Page.css";
 
 const Page = () => {
-  const { name } = useParams();
+  const { name, id } = useParams();
 
   return (
     <IonPage>
@@ -26,13 +26,13 @@ const Page = () => {
         </IonToolbar>
       </IonHeader>
 
-      <IonContent fullscreen>
+      <IonContent>
         <IonHeader collapse="condense">
           <IonToolbar>
             <IonTitle size="large">{name}</IonTitle>
           </IonToolbar>
         </IonHeader>
-        <Home />
+        <Home catId={id} />
       </IonContent>
     </IonPage>
   );

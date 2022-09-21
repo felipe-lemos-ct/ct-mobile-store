@@ -11,34 +11,48 @@ import {
 } from "@ionic/react";
 
 import { useLocation } from "react-router-dom";
-import { manOutline, womanOutline, manSharp, womanSharp } from "ionicons/icons";
-import { addIcons } from "ionicons";
 import "./Menu.css";
 
-addIcons({
-  searchProducts: "public/assets/icon/search-product-icon.svg",
-});
+import { useQuery, gql } from "@apollo/client";
 
-const appPages = [
-  {
-    title: "New",
-    url: "/page/Products",
-  },
-  {
-    title: "Products",
-    url: "/page/Products",
-    iosIcon: manOutline,
-    mdIcon: manSharp,
-  },
-  {
-    title: "Women",
-    url: "/page/Women",
-    iosIcon: womanOutline,
-    mdIcon: womanSharp,
-  },
-];
+const GET_CATEGORIES_RESULT = gql`
+  query GetCategories(
+    $locale: Locale!
+    $where: String!
+    $sort: [String!] = []
+  ) {
+    categories(sort: $sort, where: $where) {
+      count
+      total
+      results {
+        id
+        slug(locale: $locale)
+        name(locale: $locale)
+        __typename
+      }
+      __typename
+    }
+  }
+`;
 
 const Menu = () => {
+  const { loading, error, data } = useQuery(GET_CATEGORIES_RESULT, {
+    variables: {
+      sort: ["orderHint asc"],
+      locale: "en",
+      where: "parent is not defined",
+    },
+  });
+
+  let appPages = [];
+
+  if (!loading && !error) {
+    appPages = data.categories?.results.map(({ name, slug, id }) => ({
+      title: name,
+      url: slug,
+      id: id,
+    }));
+  }
   const location = useLocation();
   return (
     <IonMenu contentId="main" type="overlay">
@@ -53,7 +67,7 @@ const Menu = () => {
                   className={
                     location.pathname === appPage.url ? "selected" : ""
                   }
-                  routerLink={appPage.url}
+                  routerLink={appPage.url + "/" + appPage.id}
                   routerDirection="none"
                   lines="none"
                   detail={false}

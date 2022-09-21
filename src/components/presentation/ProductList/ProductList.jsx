@@ -94,9 +94,8 @@ const GET_PRODUCTS_RESULT = gql`
   }
 `;
 
-function DisplayProductList() {
-  //const catId = "b658cd32-a4b3-4f65-89b9-0bd1794917db";
-  const catId = "d3f8c9f8-1800-48f8-9650-1cd03abd2998";
+function DisplayProductList({ id }) {
+  const catId = id;
 
   const { loading, error, data } = useQuery(GET_PRODUCTS_RESULT, {
     variables: {
@@ -119,9 +118,6 @@ function DisplayProductList() {
 
   return (
     <IonContent className="ion-padding" scroll-y="false">
-      <IonText>
-        <h1>Some products:</h1>
-      </IonText>
       <IonSlides pager={true} options={slideOpts}>
         <IonSlide>
           <div className="slide">

@@ -31,6 +31,7 @@ import "./theme/variables.css";
 setupIonicReact();
 
 const App = () => {
+  //@TODO: Router isn't working properly, need to check
   return (
     <IonApp>
       <IonReactRouter>
@@ -38,9 +39,9 @@ const App = () => {
           <Menu />
           <IonRouterOutlet id="main">
             <Route path="/" exact={true}>
-              <Redirect to="/page/Main" />
+              <Redirect to="/page/Main/0" />
             </Route>
-            <Route path="/page/:name" exact={true}>
+            <Route path="/page/:name/:id" exact={true}>
               <Page />
             </Route>
           </IonRouterOutlet>
