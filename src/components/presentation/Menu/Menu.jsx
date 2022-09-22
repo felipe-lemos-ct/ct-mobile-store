@@ -47,7 +47,6 @@ const Menu = () => {
   let appPages = [];
 
   if (!loading && !error) {
-    console.log(data);
     appPages = data.categories?.results.map(({ name, slug, id }) => ({
       title: name,
       url: slug,

@@ -9,7 +9,8 @@ import {
 } from "@ionic/react";
 import { useParams } from "react-router";
 //import ExploreContainer from "../components/presentation/Menu/ExploreContainer";
-import Home from "./Home";
+import DisplayProductList from "../components/presentation/ProductList/ProductList";
+
 import "./Page.css";
 
 const Page = () => {
@@ -46,7 +47,7 @@ const Page = () => {
             <IonTitle size="large">{name}</IonTitle>
           </IonToolbar>
         </IonHeader>
-        <Home catId={id} />
+        <DisplayProductList id={id} />
       </IonContent>
     </IonPage>
   );

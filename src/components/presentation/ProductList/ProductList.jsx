@@ -9,7 +9,6 @@ import {
   IonCardContent,
 } from "@ionic/react";
 
-//"b658cd32-a4b3-4f65-89b9-0bd1794917db"
 const GET_PRODUCTS_RESULT = gql`
   query GetProducts($catId: String!) {
     productProjectionSearch(
@@ -94,7 +93,6 @@ const GET_PRODUCTS_RESULT = gql`
 `;
 
 function DisplayProductList({ id }) {
-  console.log(id);
   const catId = id;
 
   const { loading, error, data } = useQuery(GET_PRODUCTS_RESULT, {
@@ -103,8 +101,11 @@ function DisplayProductList({ id }) {
     },
   });
 
+  //@TODO: Create a map on data.productProjectionSearch?.results
+
   if (loading) return <p>Loading...</p>;
-  if (error) return <p>Error :(</p>;
+  if (error) return <p>An error occurred</p>;
+
   const slideOpts = {
     initialSlide: 0,
     speed: 400,
@@ -115,7 +116,9 @@ function DisplayProductList({ id }) {
   function insertDecimal(num) {
     return (num / 100).toFixed(2);
   }
+
   if (!loading && !error) {
+    //@TODO: Implement a v-for here in order to have proper slides on IonSlide.
     return (
       <IonContent className="ion-padding" scroll-y="false">
         <IonSlides pager={true} options={slideOpts}>
