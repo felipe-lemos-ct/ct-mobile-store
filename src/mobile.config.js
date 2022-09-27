@@ -1,10 +1,8 @@
-// eslint-disable-next-line no-console
-console.log("using host:", process.env.VUE_APP_CT_API_HOST);
-console.log(process.env);
 let localConfig = {};
 
 if (process.env.VUE_APP_LOCAL_SUNRISE_CONFIG) {
-  localConfig = require(process.env.VUE_APP_LOCAL_SUNRISE_CONFIG).default;
+  localConfig = require(process.env
+    .VUE_APP_LOCAL_SUNRISE_CONFIG).default;
 }
 
 const config = {
@@ -13,10 +11,12 @@ const config = {
       host:
         process.env.VUE_APP_CT_AUTH_HOST ||
         "https://auth.europe-west1.gcp.commercetools.com",
-      projectKey: process.env.VUE_APP_CT_PROJECT_KEY || "sunrise-spa",
+      projectKey:
+        process.env.VUE_APP_CT_PROJECT_KEY || "sunrise-spa",
       credentials: {
         clientId:
-          process.env.VUE_APP_CT_CLIENT_ID || "jFVHj0-tO-THQt9evnGTJ2fD",
+          process.env.VUE_APP_CT_CLIENT_ID ||
+          "jFVHj0-tO-THQt9evnGTJ2fD",
         clientSecret:
           process.env.VUE_APP_CT_CLIENT_SECRET ||
           "eUQgmtanysDpYxlOePOhcFklrwa5X8Sj",
