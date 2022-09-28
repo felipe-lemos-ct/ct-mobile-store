@@ -1,8 +1,7 @@
-import { apolloClient, cache } from '../../src/apollo';
-import { getValue } from '../../src/lib';
-import useMutation from '../useMutationFacade';
+import { gql, useMutation } from '@apollo/client';
+import { apolloClient, cache } from '../../apollo';
 import useCart from '../useCart';
-import gql from 'graphql-tag';
+
 export const createPayment = ({
   currency,
   centAmount,
@@ -152,14 +151,14 @@ const useCartMutation = ({ location, currency }) => {
   const mutateCart = (actions) => {
     return Promise.resolve()
       .then(() => {
-        if (!getValue(exist) === true) {
+        if (!exist === true) {
           return createCart({
             variables: {
               draft: {
-                currency: getValue(currency),
-                country: getValue(location),
+                currency: currency,
+                country: location,
                 shippingAddress: {
-                  country: getValue(location),
+                  country: location,
                 },
               },
             },
@@ -169,8 +168,8 @@ const useCartMutation = ({ location, currency }) => {
           }));
         }
         return {
-          version: getValue(cart).version,
-          id: getValue(cart).cartId,
+          version: cart.version,
+          id: cart.cartId,
         };
       })
       .then(({ version, id }) =>

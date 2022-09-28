@@ -1,4 +1,6 @@
-import org, { createPayment } from './ct/useCartMutation';
+import useOrg, {
+  createPayment,
+} from './ct/useCartMutation';
 import useCurrency from './useCurrency';
 import useLocation from './useLocation';
 import {
@@ -13,8 +15,7 @@ import {
   createMyOrderFromCart,
 } from './ct/useCartMutation';
 import useSelectedChannel from './useSelectedChannel';
-import { getValue } from '../src/lib';
-import { apolloClient, cache } from '../src/apollo';
+import { apolloClient, cache } from '../apollo';
 export {
   addLineItem,
   changeCartLineItemQuantity,
@@ -29,7 +30,7 @@ export {
 const useCartMutation = () => {
   const { location } = useLocation();
   const currency = useCurrency();
-  return org({ location, currency });
+  return useOrg({ location, currency });
 };
 export default useCartMutation;
 
@@ -65,9 +66,7 @@ export const useCartActions = () => {
     mutateCart(removeLineItem(lineItemId));
   };
   const addLine = (sku, quantity) =>
-    mutateCart(
-      addLineItem(sku, quantity, channel.value?.id)
-    );
+    mutateCart(addLineItem(sku, quantity, channel?.id));
   const applyDiscount = (code) =>
     mutateCart(addDiscountCode(code));
   const removeDiscount = (codeId) =>
@@ -83,7 +82,7 @@ export const useCartActions = () => {
 
   const createMyOrder = ({ method, cart }) => {
     return createPayment({
-      currency: currency.value,
+      currency: currency,
       centAmount: cart?.totalPrice?.centAmount,
       method,
     })
@@ -117,13 +116,12 @@ export const useCartActions = () => {
     return Promise.resolve().then(() => {
       const actions = [
         setBillingAddress({
-          ...getValue(billingAddress),
-          country: location.value,
+          ...billingAddress,
+          country: location,
         }),
         setShippingAddress({
-          ...(getValue(shippingAddress) ||
-            getValue(billingAddress)),
-          country: location.value,
+          ...(shippingAddress || billingAddress),
+          country: location,
         }),
       ];
       return mutateCart(actions).then(() => {
