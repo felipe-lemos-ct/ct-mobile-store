@@ -9,6 +9,7 @@ import { IonReactRouter } from '@ionic/react-router';
 import Menu from './components/presentation/Menu/Menu';
 import Page from './pages/Page';
 import Products from './pages/Products';
+import Checkout from './pages/Checkout';
 
 /* Core CSS required for Ionic components to work properly */
 import '@ionic/react/css/core.css';
@@ -47,6 +48,9 @@ const App = () => {
               exact={true}
             >
               <Products />
+            </Route>
+            <Route path="/checkout">
+              <Checkout />
             </Route>
           </IonRouterOutlet>
         </IonSplitPane>

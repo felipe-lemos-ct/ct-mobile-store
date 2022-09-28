@@ -1,13 +1,14 @@
 import useLocale from './useLocale';
-import useShippingMethods from './ct/useShippingMethods';
+import useOrg from './ct/useShippingMethods';
 
-export default (cartId) => {
+const useShippingMethods = (cartId) => {
   const { locale } = useLocale();
-  const { total, shippingMethods, loading, error } =
-    useShippingMethods({
+  const { total, shippingMethods, loading, error } = useOrg(
+    {
       locale,
       id: cartId,
-    });
+    }
+  );
   return {
     total,
     shippingMethods,
@@ -15,3 +16,4 @@ export default (cartId) => {
     error,
   };
 };
+export default useShippingMethods;

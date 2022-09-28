@@ -1,6 +1,6 @@
-import gql from 'graphql-tag';
-import useQueryFacade from '../useQueryFacade';
+import { gql, useQuery } from '@apollo/client';
 import { useState } from 'react';
+
 const query = gql`
   query shippingMethods($id: String!, $locale: Locale!) {
     shippingMethodsByCart(id: $id) {
@@ -30,7 +30,7 @@ const query = gql`
 const useShippingMethods = ({ locale, id }) => {
   const [shippingMethods, setShippingMethods] = useState();
 
-  const { loading, error } = useQueryFacade(query, {
+  const { loading, error } = useQuery(query, {
     variables: {
       id,
       locale,

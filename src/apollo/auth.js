@@ -10,7 +10,7 @@ import {
 } from './group';
 import config from '../mobile.config';
 import fetch from 'isomorphic-fetch';
-console.log(`Basic ${encode('username:pass@word1')}`);
+
 const createAuth = (au) => encode(`${au.id}:${au.secret}`);
 const au = {
   id: config.ct.auth.credentials.clientId,
