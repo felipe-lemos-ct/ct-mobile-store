@@ -13,7 +13,6 @@ import {
 import { useLocation } from 'react-router-dom';
 import './Menu.css';
 
-import { useQuery, gql } from '@apollo/client';
 import useCategories from '../../../hooks/useCategories';
 
 const Menu = () => {
