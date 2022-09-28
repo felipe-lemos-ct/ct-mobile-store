@@ -1,5 +1,5 @@
-import { IonApp, IonContent } from "@ionic/react";
-import DisplayProductList from "../components/presentation/ProductList/ProductList";
+import { IonApp, IonContent } from '@ionic/react';
+import DisplayProductList from '../components/presentation/ProductList/ProductList';
 
 const Home = ({ catId }) => {
   if (catId !== 0) {

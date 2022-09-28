@@ -1,24 +1,28 @@
-import Vue from "vue";
-import Vuex from "vuex";
-import createPersistedState from "vuex-persistedstate";
-import mobileConfig from "../mobile.config";
+import Vue from 'vue';
+import Vuex from 'vuex';
+import createPersistedState from 'vuex-persistedstate';
+import mobileConfig from '../mobile.config';
 
 Vue.use(Vuex);
 
-const SET_PAYMENT = "SET_PAYMENT";
-const SET_LOCALE = "SET_LOCALE";
-const SET_COUNTRY = "SET_COUNTRY";
-const SET_CUSTOMER_GROUP = "SET_CUSTOMER_GROUP";
-const SET_CURRENCY = "SET_CURRENCY";
-const SET_CHANNEL = "SET_CHANNEL";
-const SET_STORE_NAME = "SET_STORE_NAME";
-const SET_AUTHENTICATED = "SET_AUTHENTICATED";
-const SET_TOKEN_INFO = "SET_TOKEN_INFO";
-const SET_MINI_CART_OPEN = "SET_MINI_CART_OPEN";
-const SET_CART_ITEMS = "SET_CART_ITEMS";
+const SET_PAYMENT = 'SET_PAYMENT';
+const SET_LOCALE = 'SET_LOCALE';
+const SET_COUNTRY = 'SET_COUNTRY';
+const SET_CUSTOMER_GROUP = 'SET_CUSTOMER_GROUP';
+const SET_CURRENCY = 'SET_CURRENCY';
+const SET_CHANNEL = 'SET_CHANNEL';
+const SET_STORE_NAME = 'SET_STORE_NAME';
+const SET_AUTHENTICATED = 'SET_AUTHENTICATED';
+const SET_TOKEN_INFO = 'SET_TOKEN_INFO';
+const SET_MINI_CART_OPEN = 'SET_MINI_CART_OPEN';
+const SET_CART_ITEMS = 'SET_CART_ITEMS';
 
-const availableLocales = Object.keys(mobileConfig.languages);
-const availableCountries = Object.keys(mobileConfig.countries);
+const availableLocales = Object.keys(
+  mobileConfig.languages
+);
+const availableCountries = Object.keys(
+  mobileConfig.countries
+);
 
 export const fallbackLocale = availableLocales[0];
 const fallbackCountry = availableCountries[0];
@@ -44,17 +48,17 @@ const setMiniCartTimeout = (commit, state, timeout) => {
 export default new Vuex.Store({
   plugins: [
     createPersistedState({
-      key: "session",
+      key: 'session',
       paths: [
-        "payment",
-        "locale",
-        "country",
-        "currency",
-        "tokenInfo",
-        "authenticated",
-        "customerGroup",
-        "channel",
-        "storeName",
+        'payment',
+        'locale',
+        'country',
+        'currency',
+        'tokenInfo',
+        'authenticated',
+        'customerGroup',
+        'channel',
+        'storeName',
       ],
     }),
   ],
@@ -77,7 +81,8 @@ export default new Vuex.Store({
       commit(SET_PAYMENT, payment);
     },
     setLocale: ({ commit }, locale) => {
-      if (availableLocales.includes(locale)) commit(SET_LOCALE, locale);
+      if (availableLocales.includes(locale))
+        commit(SET_LOCALE, locale);
     },
     setCustomerGroup: ({ commit }, customerGroup) => {
       commit(SET_CUSTOMER_GROUP, customerGroup);
@@ -101,7 +106,8 @@ export default new Vuex.Store({
     setAuthenticated: ({ commit }, authenticated) =>
       commit(SET_AUTHENTICATED, authenticated),
 
-    setTokenInfo: ({ commit }, tokenInfo) => commit(SET_TOKEN_INFO, tokenInfo),
+    setTokenInfo: ({ commit }, tokenInfo) =>
+      commit(SET_TOKEN_INFO, tokenInfo),
 
     clearAuthentication: ({ commit }) => {
       commit(SET_TOKEN_INFO, null);

@@ -22,7 +22,9 @@ export const createGroup =
     cache.set(key, result);
     return result;
   };
-export const createPromiseSessionCache = (cache = new Map()) => {
+export const createPromiseSessionCache = (
+  cache = new Map()
+) => {
   return {
     get: (key) => cache.get(key),
     set: (key, value) => cache.set(key, value),

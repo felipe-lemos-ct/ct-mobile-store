@@ -55,7 +55,8 @@
     "start": "react-scripts start",
     "build": "react-scripts build",
     "test": "react-scripts test --transformIgnorePatterns 'node_modules/(?!(@ionic/react|@ionic/react-router|@ionic/core|@stencil/core|ionicons)/)'",
-    "eject": "react-scripts eject"
+    "eject": "react-scripts eject",
+    "format": "prettier --write ."
   },
   "eslintConfig": {
     "extends": [
@@ -76,7 +77,8 @@
     ]
   },
   "devDependencies": {
-    "@capacitor/cli": "4.0.0"
+    "@capacitor/cli": "4.0.0",
+    "prettier": "^2.7.1"
   },
   "description": "An Ionic project"
 }
