@@ -1,5 +1,5 @@
-import { useCartActions } from 'hooks/useCartMutation';
-import config from '../sunrise.config';
+import { useCartActions } from './useCartMutation';
+import config from '../mobile.config';
 import useCart from './useCart';
 
 function subTotal(cartLike) {

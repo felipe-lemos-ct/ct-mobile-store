@@ -1,4 +1,3 @@
-import { useQuery, gql } from '@apollo/client';
 import {
   IonSlides,
   IonSlide,
@@ -9,6 +8,7 @@ import {
   IonCardContent,
 } from '@ionic/react';
 import { memo, useEffect } from 'react';
+import useCartTools from '../../../hooks/useCartTools';
 import useProducts from '../../../hooks/useProducts';
 
 function ProductList() {
@@ -46,6 +46,8 @@ function ProductList() {
   }
 }
 const Product = memo(function Product({ product }) {
+  const { addLine } = useCartTools();
+  console.log('product:', product);
   //@todo: make this a price component or a library function
   //  that takes price and converts to number
   //  but since price may have discount it is better to make this a
@@ -53,6 +55,8 @@ const Product = memo(function Product({ product }) {
   function insertDecimal(num) {
     return (num / 100).toFixed(2);
   }
+  const addToCart = () =>
+    addLine(product.masterVariant.sku, 1);
 
   return (
     <IonSlide>
@@ -70,6 +74,7 @@ const Product = memo(function Product({ product }) {
               product.masterVariant.scopedPrice.value
                 .centAmount
             )}
+            <button onClick={addToCart}>add to cart</button>
           </IonCardContent>
         </IonCard>
       </div>

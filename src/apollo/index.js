@@ -3,9 +3,9 @@ import {
   createHttpLink,
   InMemoryCache,
   defaultDataIdFromObject,
-} from "@apollo/client/core";
-import config from "../mobile.config";
-import fetch from "./auth";
+} from '@apollo/client/core';
+import config from '../mobile.config';
+import fetch from './auth';
 export const cache = new InMemoryCache({
   //getting default id is broken
   dataIdFromObject(responseObject) {
@@ -19,10 +19,12 @@ export const cache = new InMemoryCache({
     //   //   responseObject
     //   // )}:${JSON.stringify(responseObject.scopedPrice)}`;
     // }
-    if (responseObject.__typename === "Me") {
+    if (responseObject.__typename === 'Me') {
       //both orders and active cart are identified as "Me" this breaks
       //  apollo cache
-      return "activeCart" in responseObject ? "activeCart" : "orders";
+      return 'activeCart' in responseObject
+        ? 'activeCart'
+        : 'orders';
     }
     return defaultDataIdFromObject(responseObject);
   },
@@ -31,9 +33,7 @@ const httpLink = createHttpLink({
   uri: `${config.ct.api}/${config.ct.auth.projectKey}/graphql`,
   fetch,
 });
-const apolloClient = new ApolloClient({
+export const apolloClient = new ApolloClient({
   cache,
   link: httpLink,
 });
-
-export default apolloClient;

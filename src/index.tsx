@@ -3,12 +3,12 @@ import ReactDOM from "react-dom";
 import App from "./App";
 import * as serviceWorkerRegistration from "./serviceWorkerRegistration";
 import reportWebVitals from "./reportWebVitals";
-import client from "./apollo/index";
+import { apolloClient } from "./apollo/index";
 import { ApolloProvider } from "@apollo/client";
 
 ReactDOM.render(
   <>
-    <ApolloProvider client={client}>
+    <ApolloProvider client={apolloClient}>
       <App />
     </ApolloProvider>
   </>,
