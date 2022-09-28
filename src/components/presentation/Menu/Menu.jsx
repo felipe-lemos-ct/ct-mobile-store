@@ -14,49 +14,20 @@ import { useLocation } from 'react-router-dom';
 import './Menu.css';
 
 import { useQuery, gql } from '@apollo/client';
-
-const GET_CATEGORIES_RESULT = gql`
-  query GetCategories(
-    $locale: Locale!
-    $where: String!
-    $sort: [String!] = []
-  ) {
-    categories(sort: $sort, where: $where) {
-      count
-      total
-      results {
-        id
-        slug(locale: $locale)
-        name(locale: $locale)
-        __typename
-      }
-      __typename
-    }
-  }
-`;
+import useCategories from '../../../hooks/useCategories';
 
 const Menu = () => {
-  const { loading, error, data } = useQuery(
-    GET_CATEGORIES_RESULT,
-    {
-      variables: {
-        sort: ['orderHint asc'],
-        locale: 'en',
-        where: 'parent is not defined',
-      },
-    }
-  );
-
+  const { categories, loading, error } = useCategories({
+    rootOnly: true,
+  });
   let appPages = [];
-
-  if (!loading && !error) {
-    appPages = data.categories?.results.map(
-      ({ name, slug, id }) => ({
-        title: name,
-        url: slug,
-        id: id,
-      })
-    );
+  //@todo: somehow loading is false when there is no data
+  if (!loading && !error && categories) {
+    appPages = categories.map(({ name, slug, id }) => ({
+      title: name,
+      url: slug,
+      id: id,
+    }));
   }
   const location = useLocation();
   return (

@@ -13,11 +13,6 @@ import useProducts from '../../../hooks/useProducts';
 
 function ProductList() {
   const { products, loading, error } = useProducts();
-  useEffect(() => {
-    if (products) {
-      console.log('got products:', products[0]);
-    }
-  }, [products]);
   if (error) return <p>An error occurred</p>;
   //@todo: not sure why loading is false when no data is there
   if (loading || !products) return <p>Loading...</p>;
@@ -28,7 +23,6 @@ function ProductList() {
     loop: true,
     innerHeight: 100,
   };
-  console.log(loading, error, products);
   //@todo: not sure why loading is false when no data is there
   if (!loading && !error && products) {
     return (
@@ -47,7 +41,6 @@ function ProductList() {
 }
 const Product = memo(function Product({ product }) {
   const { addLine } = useCartTools();
-  console.log('product:', product);
   //@todo: make this a price component or a library function
   //  that takes price and converts to number
   //  but since price may have discount it is better to make this a
