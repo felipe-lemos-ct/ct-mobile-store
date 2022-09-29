@@ -1,21 +1,30 @@
-import { encode } from "js-base64";
-import { ACCESS_TOKEN, CUSTOMER, REFRESH_TOKEN } from "../constants";
-import { createGroup, createPromiseSessionCache } from "./group";
-import config from "../mobile.config";
-import fetch from "isomorphic-fetch";
+import { encode } from 'js-base64';
+import {
+  ACCESS_TOKEN,
+  CUSTOMER,
+  REFRESH_TOKEN,
+} from '../constants';
+import {
+  createGroup,
+  createPromiseSessionCache,
+} from './group';
+import config from '../mobile.config';
+import fetch from 'isomorphic-fetch';
 
 const createAuth = (au) => encode(`${au.id}:${au.secret}`);
 const au = {
   id: config.ct.auth.credentials.clientId,
   secret: config.ct.auth.credentials.clientSecret,
-  scope: config.ct.auth.scope,
+  scope: config.ct.auth.scopes,
   projectKey: config.ct.auth.projectKey,
   authUrl: config.ct.auth.host,
 };
-
+console.log('using config:', config);
 const saveToken = ({ access_token, refresh_token }) => {
-  access_token && localStorage.setItem(ACCESS_TOKEN, access_token);
-  refresh_token && localStorage.setItem(REFRESH_TOKEN, refresh_token);
+  access_token &&
+    localStorage.setItem(ACCESS_TOKEN, access_token);
+  refresh_token &&
+    localStorage.setItem(REFRESH_TOKEN, refresh_token);
   return access_token;
 };
 export const resetToken = () => {
@@ -30,16 +39,21 @@ const getToken = group(() => {
   }
   const scope = encodeURI(au.scope);
   const auth = createAuth(au);
-  return fetch(`${au.authUrl}/oauth/${au.projectKey}/anonymous/token`, {
-    headers: {
-      authorization: `Basic ${auth}`,
-      "content-type": "application/x-www-form-urlencoded",
-    },
-    body: `grant_type=client_credentials&scope=${scope}`,
-    method: "POST",
-  })
+  return fetch(
+    `${au.authUrl}/oauth/${au.projectKey}/anonymous/token`,
+    {
+      headers: {
+        authorization: `Basic ${auth}`,
+        'content-type': 'application/x-www-form-urlencoded',
+      },
+      body: `grant_type=client_credentials&scope=${scope}`,
+      method: 'POST',
+    }
+  )
     .then((response) =>
-      response.ok ? response.json() : Promise.reject(response)
+      response.ok
+        ? response.json()
+        : Promise.reject(response)
     )
     .then(saveToken)
     .catch(handleError);
@@ -84,15 +98,15 @@ const refreshToken = group((au) => {
   const auth = createAuth(au);
   if (!refreshToken) {
     resetToken();
-    return Promise.reject("no refresh token");
+    return Promise.reject('no refresh token');
   }
   return fetch(`${au.authUrl}/oauth/token`, {
     headers: {
       authorization: `Basic ${auth}`,
-      "content-type": "application/x-www-form-urlencoded",
+      'content-type': 'application/x-www-form-urlencoded',
     },
     body: `grant_type=refresh_token&refresh_token=${refreshToken}`,
-    method: "POST",
+    method: 'POST',
   })
     .then((response) => response.json())
     .then((token) => {
@@ -106,19 +120,22 @@ const refreshToken = group((au) => {
 
 export const loginToken = (email, password) => {
   const auth = createAuth(au);
-  return fetch(`${au.authUrl}/oauth/${au.projectKey}/customers/token`, {
-    headers: {
-      "Content-Type": "application/x-www-form-urlencoded",
-      authorization: `Basic ${auth}`,
-    },
-    body: new URLSearchParams({
-      username: email,
-      password,
-      grant_type: "password",
-      scope: config.ct.auth.scope,
-    }),
-    method: "POST",
-  })
+  return fetch(
+    `${au.authUrl}/oauth/${au.projectKey}/customers/token`,
+    {
+      headers: {
+        'Content-Type': 'application/x-www-form-urlencoded',
+        authorization: `Basic ${auth}`,
+      },
+      body: new URLSearchParams({
+        username: email,
+        password,
+        grant_type: 'password',
+        scope: config.ct.auth.scope,
+      }),
+      method: 'POST',
+    }
+  )
     .then((response) => response.json())
     .then((response) => {
       saveToken(response);

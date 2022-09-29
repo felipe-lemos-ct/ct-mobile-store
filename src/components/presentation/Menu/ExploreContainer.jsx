@@ -1,11 +1,11 @@
-import "./ExploreContainer.css";
+import './ExploreContainer.css';
 
 const ExploreContainer = ({ name }) => {
   return (
     <div className="container">
       <strong>{name}</strong>
       <p>
-        Explore{" "}
+        Explore{' '}
         <a
           target="_blank"
           rel="noopener noreferrer"

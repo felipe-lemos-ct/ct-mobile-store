@@ -1,4 +1,3 @@
-import { useQuery, gql } from "@apollo/client";
 import {
   IonSlides,
   IonSlide,
@@ -7,104 +6,16 @@ import {
   IonCardHeader,
   IonCardTitle,
   IonCardContent,
-} from "@ionic/react";
+} from '@ionic/react';
+import { memo, useEffect } from 'react';
+import useCartTools from '../../../hooks/useCartTools';
+import useProducts from '../../../hooks/useProducts';
 
-const GET_PRODUCTS_RESULT = gql`
-  query GetProducts($catId: String!) {
-    productProjectionSearch(
-      locale: "en"
-      text: ""
-      limit: 10
-      offset: 0
-      sorts: ""
-      priceSelector: {
-        currency: "EUR"
-        country: "DE"
-        channel: null
-        customerGroup: null
-      }
-      filters: [
-        {
-          model: {
-            range: {
-              path: "variants.scopedPrice.value.centAmount"
-              ranges: [{ from: "0", to: "1000000000000" }]
-            }
-          }
-        }
-        {
-          model: {
-            tree: {
-              path: "categories.id"
-              rootValues: []
-              subTreeValues: [$catId]
-            }
-          }
-        }
-      ]
-    ) {
-      total
-      results {
-        productId: id
-        name(locale: "en")
-        slug(locale: "en")
-        masterVariant {
-          variantId: id
-          sku
-          images {
-            url
-            __typename
-          }
-          attributesRaw {
-            name
-            value
-            __typename
-          }
-          scopedPrice {
-            value {
-              currencyCode
-              centAmount
-              fractionDigits
-              __typename
-            }
-            discounted {
-              discount {
-                name(locale: "en")
-                __typename
-              }
-              value {
-                currencyCode
-                centAmount
-                fractionDigits
-                __typename
-              }
-              __typename
-            }
-            country
-            __typename
-          }
-          __typename
-        }
-        __typename
-      }
-      __typename
-    }
-  }
-`;
-
-function DisplayProductList({ id }) {
-  const catId = id;
-
-  const { loading, error, data } = useQuery(GET_PRODUCTS_RESULT, {
-    variables: {
-      catId,
-    },
-  });
-
-  //@TODO: Create a map on data.productProjectionSearch?.results
-
-  if (loading) return <p>Loading...</p>;
+function ProductList() {
+  const { products, loading, error } = useProducts();
   if (error) return <p>An error occurred</p>;
+  //@todo: not sure why loading is false when no data is there
+  if (loading || !products) return <p>Loading...</p>;
 
   const slideOpts = {
     initialSlide: 0,
@@ -112,92 +23,55 @@ function DisplayProductList({ id }) {
     loop: true,
     innerHeight: 100,
   };
-
-  function insertDecimal(num) {
-    return (num / 100).toFixed(2);
-  }
-
-  if (!loading && !error) {
-    //@TODO: Implement a v-for here in order to have proper slides on IonSlide.
+  //@todo: not sure why loading is false when no data is there
+  if (!loading && !error && products) {
     return (
       <IonContent className="ion-padding" scroll-y="false">
         <IonSlides pager={true} options={slideOpts}>
-          <IonSlide>
-            <div className="slide">
-              <IonCard>
-                <img
-                  src={
-                    data.productProjectionSearch?.results[0].masterVariant
-                      .images[0].url
-                  }
-                  alt="aa"
-                ></img>
-                <IonCardHeader>
-                  <IonCardTitle>
-                    {data.productProjectionSearch?.results[0].name}
-                  </IonCardTitle>
-                </IonCardHeader>
-                <IonCardContent>
-                  {insertDecimal(
-                    data.productProjectionSearch?.results[0].masterVariant
-                      .scopedPrice.value.centAmount
-                  )}
-                </IonCardContent>
-              </IonCard>
-            </div>
-          </IonSlide>
-          <IonSlide>
-            <div className="slide">
-              <IonCard>
-                <img
-                  src={
-                    data.productProjectionSearch?.results[1].masterVariant
-                      .images[0].url
-                  }
-                  alt="aa"
-                ></img>
-                <IonCardHeader>
-                  <IonCardTitle>
-                    {data.productProjectionSearch?.results[1].name}
-                  </IonCardTitle>
-                </IonCardHeader>
-                <IonCardContent>
-                  {insertDecimal(
-                    data.productProjectionSearch?.results[1].masterVariant
-                      .scopedPrice.value.centAmount
-                  )}
-                </IonCardContent>
-              </IonCard>
-            </div>
-          </IonSlide>
-          <IonSlide>
-            <div className="slide">
-              <IonCard>
-                <img
-                  src={
-                    data.productProjectionSearch?.results[2].masterVariant
-                      .images[0].url
-                  }
-                  alt="aa"
-                ></img>
-                <IonCardHeader>
-                  <IonCardTitle>
-                    {data.productProjectionSearch?.results[2].name}
-                  </IonCardTitle>
-                </IonCardHeader>
-                <IonCardContent>
-                  {insertDecimal(
-                    data.productProjectionSearch?.results[2].masterVariant
-                      .scopedPrice.value.centAmount
-                  )}
-                </IonCardContent>
-              </IonCard>
-            </div>
-          </IonSlide>
+          {products.map((product) => (
+            <Product
+              key={product.productId}
+              product={product}
+            />
+          ))}
         </IonSlides>
       </IonContent>
     );
   }
 }
+const Product = memo(function Product({ product }) {
+  const { addLine } = useCartTools();
+  //@todo: make this a price component or a library function
+  //  that takes price and converts to number
+  //  but since price may have discount it is better to make this a
+  //  component with the original price striked trough as in vue app
+  function insertDecimal(num) {
+    return (num / 100).toFixed(2);
+  }
+  const addToCart = () =>
+    addLine(product.masterVariant.sku, 1);
 
-export default DisplayProductList;
+  return (
+    <IonSlide>
+      <div className="slide">
+        <IonCard>
+          <img
+            src={product.masterVariant?.images[0].url}
+            alt="aa"
+          ></img>
+          <IonCardHeader>
+            <IonCardTitle>{product.name}</IonCardTitle>
+          </IonCardHeader>
+          <IonCardContent>
+            {insertDecimal(
+              product.masterVariant.scopedPrice.value
+                .centAmount
+            )}
+            <button onClick={addToCart}>add to cart</button>
+          </IonCardContent>
+        </IonCard>
+      </div>
+    </IonSlide>
+  );
+});
+export default ProductList;
