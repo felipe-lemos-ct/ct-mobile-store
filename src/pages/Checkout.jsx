@@ -1,11 +1,15 @@
 import {
   IonButtons,
+  IonButton,
   IonContent,
   IonHeader,
   IonMenuButton,
   IonPage,
   IonTitle,
   IonToolbar,
+  IonCard,
+  IonCardHeader,
+  IonCardContent,
 } from '@ionic/react';
 import { memo, useCallback } from 'react';
 import { useEffect } from 'react';
@@ -29,6 +33,22 @@ const Checkout = () => {
     removeDiscount,
     applyDiscount,
   } = useCartTools();
+
+  const setShipAddress = useCallback(() => {
+    const address = {
+      firstName: 'John',
+      lastName: 'Whatever',
+      streetName: 'Glogauer Straße',
+      streetNumber: '13',
+      postalCode: '12045',
+      city: 'Berlin',
+      phone: '123453',
+      email: 'my.email@email.com',
+      country: 'DE',
+    };
+    setShippingAddress(address);
+  });
+
   const createOrder = useCallback(() => {
     createMyOrderFromCart({ method: 'paypal', cart });
   });
@@ -62,6 +82,19 @@ const Checkout = () => {
               <IonTitle size="large">{name}</IonTitle>
             </IonToolbar>
           </IonHeader>
+
+          <IonCard className="ion-padding">
+            <IonCardHeader>Shipping Address:</IonCardHeader>
+            <IonCardContent>
+              <IonButton
+                className="ion-margin-top"
+                type="submit"
+                onClick={setShipAddress}
+              >
+                Set Hardcoded Address
+              </IonButton>
+            </IonCardContent>
+          </IonCard>
           <button onClick={createOrder}>check out</button>
           <pre>{JSON.stringify(cart, undefined, 2)}</pre>
           <ShippingMethods cart={cart} />
