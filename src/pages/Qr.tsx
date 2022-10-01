@@ -10,11 +10,15 @@ const Qr = () => {
   const canvas = useRef(null);
 
   useEffect(() => {
+    if (!scanning) {
+      return;
+    }
     const videoElement =
       video.current as unknown as HTMLVideoElement;
     const canvasElement =
       canvas.current as unknown as HTMLCanvasElement;
     const canvasContext = canvasElement?.getContext('2d');
+    let stream;
     function scan() {
       if (
         !(
@@ -54,20 +58,24 @@ const Qr = () => {
       setScanning(false);
     }
     async function init() {
-      if (!scanning) {
-        return;
-      }
       //@todo: getUsermedia does not work on Ios browser (will work as app)
-      const stream =
-        await navigator.mediaDevices.getUserMedia({
-          video: { facingMode: 'environment' },
-        });
+      stream = await navigator.mediaDevices.getUserMedia({
+        video: { facingMode: 'environment' },
+      });
       videoElement.srcObject = stream;
       videoElement.setAttribute('playsInline', 'true');
       videoElement.play();
       requestAnimationFrame(scan);
     }
     init();
+    return () => {
+      //cleanup gets previous value
+      if (scanning) {
+        stream.getTracks().forEach(function (track) {
+          track.stop();
+        });
+      }
+    };
   }, [scanning]);
   return (
     <>
