@@ -10,6 +10,7 @@ import Menu from './components/presentation/Menu/Menu';
 import Page from './pages/Page';
 import Products from './pages/Products';
 import Checkout from './pages/Checkout';
+import Qr from './pages/Qr';
 
 /* Core CSS required for Ionic components to work properly */
 import '@ionic/react/css/core.css';
@@ -51,6 +52,9 @@ const App = () => {
             </Route>
             <Route path="/checkout">
               <Checkout />
+            </Route>
+            <Route path="/qr">
+              <Qr />
             </Route>
           </IonRouterOutlet>
         </IonSplitPane>
