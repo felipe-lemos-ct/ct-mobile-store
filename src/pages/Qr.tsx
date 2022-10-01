@@ -1,7 +1,8 @@
 import jsQR from 'jsqr';
 import React, { useEffect } from 'react';
 import { useRef, useState } from 'react';
-
+//create any qr code at https://goqr.me/ on your phone
+//  and scan it with your laptop camera
 const Qr = () => {
   const [scanning, setScanning] = useState(false);
   const [code, setCode] = useState();
