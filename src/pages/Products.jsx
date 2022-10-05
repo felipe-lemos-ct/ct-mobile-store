@@ -15,8 +15,6 @@ import ProductList from '../components/presentation/ProductList/ProductList';
 import useCategories from '../hooks/useCategories';
 import CartFloatingButton from '../components/presentation/Menu/CartFloatingButton';
 
-import './Page.css';
-
 const Products = () => {
   const { categorySlug } = useParams();
   const [name, setName] = useState();
