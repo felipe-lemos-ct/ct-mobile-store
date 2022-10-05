@@ -21,8 +21,6 @@ import useCart from '../hooks/useCart';
 import useCartTools from '../hooks/useCartTools';
 import useShippingMethods from '../hooks/useShippingMethods';
 
-import './Page.css';
-
 const Checkout = () => {
   const name = 'Cart';
   const { cart, loading, error } = useCart();

@@ -7,8 +7,6 @@ import {
   IonToolbar,
 } from '@ionic/react';
 
-import './Page.css';
-
 const Page = () => {
   return (
     <IonPage>
