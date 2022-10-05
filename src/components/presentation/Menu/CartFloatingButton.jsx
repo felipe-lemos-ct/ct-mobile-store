@@ -37,7 +37,7 @@ function CartFloatingButton() {
     return (
       <IonContent>
         <IonFab slot="fixed">
-          <IonFabButton>
+          <IonFabButton href="/checkout">
             <IonIcon icon={cartOutline}></IonIcon>
             {totalItems}
           </IonFabButton>
