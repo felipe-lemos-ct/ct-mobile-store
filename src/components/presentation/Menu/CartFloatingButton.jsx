@@ -7,7 +7,11 @@ import {
   IonFab,
   IonFabButton,
   IonContent,
+  IonIcon,
 } from '@ionic/react';
+
+import { cartOutline } from 'ionicons/icons';
+
 import useCart from '../../../hooks/useCart';
 
 function CartFloatingButton() {
@@ -26,7 +30,6 @@ function CartFloatingButton() {
   }
   if (cart) {
     console.log('return badge');
-
     const totalItems = cart.lineItems
       .map((item) => item.quantity)
       .reduce((a, b) => a + b);
@@ -34,7 +37,10 @@ function CartFloatingButton() {
     return (
       <IonContent>
         <IonFab slot="fixed">
-          <IonFabButton>{totalItems}</IonFabButton>
+          <IonFabButton>
+            <IonIcon icon={cartOutline}></IonIcon>
+            {totalItems}
+          </IonFabButton>
         </IonFab>
       </IonContent>
     );
