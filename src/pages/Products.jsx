@@ -6,6 +6,7 @@ import {
   IonPage,
   IonTitle,
   IonToolbar,
+  IonFab,
 } from '@ionic/react';
 import { useEffect } from 'react';
 import { useState } from 'react';
@@ -44,9 +45,15 @@ const Products = () => {
         </IonToolbar>
       </IonHeader>
       <IonContent>
+        <IonFab
+          vertical="top"
+          horizontal="end"
+          slot="fixed"
+        >
+          <CartFloatingButton />
+        </IonFab>
         <ProductList />
       </IonContent>
-      <CartFloatingButton />
     </IonPage>
   );
 };

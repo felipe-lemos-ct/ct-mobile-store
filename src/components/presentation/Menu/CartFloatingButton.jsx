@@ -35,14 +35,10 @@ function CartFloatingButton() {
       .reduce((a, b) => a + b);
 
     return (
-      <IonContent>
-        <IonFab v-slot="end">
-          <IonFabButton href="/checkout">
-            <IonIcon icon={cartOutline}></IonIcon>
-            {totalItems}
-          </IonFabButton>
-        </IonFab>
-      </IonContent>
+      <IonFabButton href="/checkout">
+        <IonIcon icon={cartOutline}></IonIcon>
+        {totalItems}
+      </IonFabButton>
     );
   } else {
     return (
