@@ -9,11 +9,12 @@ import {
   IonContent,
 } from '@ionic/react';
 import useCart from '../../../hooks/useCart';
+
 function CartFloatingButton() {
   const { cart, loading, error } = useCart();
   useEffect(() => {
     if (cart === null) {
-      console.log('redirect to order list...');
+      console.log('Cart is Null');
     }
   }, [cart]);
   if (loading) {
@@ -25,12 +26,15 @@ function CartFloatingButton() {
   }
   if (cart) {
     console.log('return badge');
+
+    const totalItems = cart.lineItems
+      .map((item) => item.quantity)
+      .reduce((a, b) => a + b);
+
     return (
       <IonContent>
         <IonFab slot="fixed">
-          <IonFabButton>
-            {cart.lineItems?.length}
-          </IonFabButton>
+          <IonFabButton>{totalItems}</IonFabButton>
         </IonFab>
       </IonContent>
     );
