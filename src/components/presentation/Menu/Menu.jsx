@@ -1,6 +1,5 @@
 import {
   IonContent,
-  IonIcon,
   IonItem,
   IonLabel,
   IonList,
@@ -49,11 +48,6 @@ const Menu = () => {
                   lines="none"
                   detail={false}
                 >
-                  <IonIcon
-                    slot="start"
-                    ios={appPage.iosIcon}
-                    md={appPage.mdIcon}
-                  />
                   <IonLabel>{appPage.title}</IonLabel>
                 </IonItem>
               </IonMenuToggle>
