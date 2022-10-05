@@ -4,9 +4,7 @@ import {
   IonBadge,
   IonItem,
   IonList,
-  IonFab,
   IonFabButton,
-  IonContent,
   IonIcon,
 } from '@ionic/react';
 
